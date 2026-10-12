@@ -19,6 +19,74 @@ export type MireloScorePdfs = {
   tablature?: { name?: string; url?: string }[];
 };
 
+/** Mirelo may return score_pdfs as an object or as a list of {kind,url,...}. */
+function normalizeScorePdfs(raw: unknown): MireloScorePdfs | undefined {
+  if (!raw) return undefined;
+
+  if (Array.isArray(raw)) {
+    const full = raw.find(
+      (p) =>
+        p &&
+        typeof p === "object" &&
+        String((p as { kind?: string }).kind || "").toLowerCase() ===
+          "full_score" &&
+        typeof (p as { url?: string }).url === "string",
+    ) as { url?: string } | undefined;
+    const parts = raw
+      .filter(
+        (p) =>
+          p &&
+          typeof p === "object" &&
+          String((p as { kind?: string }).kind || "").toLowerCase() === "part" &&
+          typeof (p as { url?: string }).url === "string",
+      )
+      .map((p) => {
+        const item = p as {
+          url: string;
+          part_name?: string;
+          name?: string;
+          filename?: string;
+        };
+        return {
+          name: item.part_name || item.name || item.filename,
+          url: item.url,
+        };
+      });
+    const tablature = raw
+      .filter(
+        (p) =>
+          p &&
+          typeof p === "object" &&
+          /tab/i.test(String((p as { kind?: string }).kind || "")) &&
+          typeof (p as { url?: string }).url === "string",
+      )
+      .map((p) => {
+        const item = p as {
+          url: string;
+          part_name?: string;
+          name?: string;
+          filename?: string;
+        };
+        return {
+          name: item.part_name || item.name || item.filename,
+          url: item.url,
+        };
+      });
+    const out: MireloScorePdfs = {
+      full_score_url: full?.url,
+      parts: parts.length ? parts : undefined,
+      tablature: tablature.length ? tablature : undefined,
+    };
+    if (!out.full_score_url && !out.parts && !out.tablature) return undefined;
+    return out;
+  }
+
+  if (typeof raw === "object") {
+    return raw as MireloScorePdfs;
+  }
+  return undefined;
+}
+
 export type MireloResult = {
   midi_url?: string;
   musicxml_url?: string;
@@ -28,6 +96,7 @@ export type MireloResult = {
   key?: string;
   chords?: string[];
   score_pdfs?: MireloScorePdfs;
+  score_bundle_url?: string;
   raw: Record<string, unknown>;
 };
 
@@ -139,10 +208,7 @@ async function pollJob(jobUrl: string, timeoutMs = 12 * 60 * 1000): Promise<Mire
 
 function normalizeResult(body: Record<string, unknown>): MireloResult {
   const result = (body.result as Record<string, unknown>) || body;
-  const score =
-    (result.score_pdfs as MireloScorePdfs) ||
-    (body.score_pdfs as MireloScorePdfs) ||
-    undefined;
+  const score = normalizeScorePdfs(result.score_pdfs ?? body.score_pdfs);
 
   const chordsRaw = result.chords || body.chords;
   let chords: string[] | undefined;
@@ -161,6 +227,9 @@ function normalizeResult(body: Record<string, unknown>): MireloResult {
     key: (result.key || body.key) as string | undefined,
     chords,
     score_pdfs: score,
+    score_bundle_url: (result.score_bundle_url || body.score_bundle_url) as
+      | string
+      | undefined,
     raw: body,
   };
 }

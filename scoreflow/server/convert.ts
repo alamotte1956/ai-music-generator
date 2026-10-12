@@ -105,6 +105,7 @@ export async function convertAudioToLeadSheet(opts: {
   const pdf =
     mirelo.score_pdfs?.full_score_url ||
     mirelo.score_pdfs?.parts?.[0]?.url ||
+    mirelo.score_bundle_url ||
     undefined;
 
   const tabUrl = mirelo.score_pdfs?.tablature?.[0]?.url;
