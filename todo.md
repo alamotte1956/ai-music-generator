@@ -696,7 +696,7 @@
 - [x] Write tests for sitemap endpoint
 
 ## Bug Fix - Redirect URL Not Set
-- [ ] Investigate and fix "redirect URL is not set" error
+- [x] Investigate and fix "redirect URL is not set" error (login URL builder always sends redirectUri, and a missing portal URL no longer crashes the page)
 
 ## Safari Compatibility - OAuth Redirect Fix
 - [ ] Audit OAuth login URL construction for Safari btoa/atob edge cases
@@ -744,7 +744,7 @@
 - [x] Write tests for JSON-LD generation and injection
 
 ## Bug Fix - Lyrics Not Working
-- [ ] Investigate and fix lyrics generation/display issue
+- [x] Investigate and fix lyrics generation/display issue (read text from string or content-block responses)
 
 ## SEO - Canonical Tags & Robots.txt
 - [x] Add canonical tag support to usePageMeta hook

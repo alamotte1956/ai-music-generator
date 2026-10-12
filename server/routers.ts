@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
-import { invokeLLM } from "./_core/llm";
+import { extractAssistantText, invokeLLM } from "./_core/llm";
 import {
   createSong, getSongById, getUserSongs, deleteSong, updateSong, updateSongMp3,
   updateSongAudioUrl, updateSongShareToken, getSongByShareToken,
@@ -227,8 +227,7 @@ ${genreGuide}${moodGuide}${vocalGuidance}`;
           ],
         });
 
-        const rawContent = response.choices?.[0]?.message?.content;
-        const lyrics = typeof rawContent === "string" ? rawContent.trim() : null;
+        const lyrics = extractAssistantText(response.choices?.[0]?.message?.content);
         if (!lyrics) {
           throw new Error("Failed to generate lyrics. Please try again.");
         }
@@ -270,8 +269,7 @@ ${genreGuide}${moodGuide}${vocalGuidance}`;
           ],
         });
 
-        const rawContent = response.choices?.[0]?.message?.content;
-        const refined = typeof rawContent === "string" ? rawContent.trim() : null;
+        const refined = extractAssistantText(response.choices?.[0]?.message?.content);
         if (!refined) throw new Error("Failed to refine lyrics. Please try again.");
         return { lyrics: refined, mode: input.mode };
       }),
@@ -712,8 +710,7 @@ RULES:
           ],
         });
 
-        const rawContent = response.choices?.[0]?.message?.content;
-        const abcNotation = typeof rawContent === "string" ? rawContent.trim() : null;
+        const abcNotation = extractAssistantText(response.choices?.[0]?.message?.content);
         if (!abcNotation) {
           throw new Error("Failed to generate sheet music. Please try again.");
         }
@@ -803,8 +800,8 @@ RULES:
           ],
         });
 
-        const rawContent = response.choices?.[0]?.message?.content;
-        if (!rawContent || typeof rawContent !== "string") {
+        const rawContent = extractAssistantText(response.choices?.[0]?.message?.content);
+        if (!rawContent) {
           throw new Error("Failed to generate chord progression. Please try again.");
         }
 
