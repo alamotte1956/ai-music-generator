@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { HelpCircle, Music, CreditCard, Shield, Headphones, FileText } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME, SUPPORT_EMAIL } from "@shared/brand";
 import {
   Accordion,
   AccordionContent,
@@ -14,8 +15,8 @@ const faqCategories = [
     icon: <Music className="h-5 w-5 text-violet-600" />,
     items: [
       {
-        q: "What is Make Custom Music?",
-        a: "Make Custom Music is an AI-powered music generation platform. Describe the music you imagine — choose a genre, mood, and vocal style — and our AI composes a unique song for you in seconds. You can download it as MP3, view sheet music, and organize songs into albums.",
+        q: `What is ${SITE_NAME}?`,
+        a: `${SITE_NAME} is an AI-powered music generation platform. Describe the music you imagine — choose a genre, mood, and vocal style — and our AI composes a unique song for you in seconds. You can download it as MP3, view sheet music, and organize songs into albums.`,
       },
       {
         q: "How do I create my first song?",
@@ -129,7 +130,7 @@ const faqCategories = [
       },
       {
         q: "How do I contact support?",
-        a: "You can reach us at support@makecustommusic.com for any questions, issues, or feedback. We aim to respond within 24 hours.",
+        a: `You can reach us at ${SUPPORT_EMAIL} for any questions, issues, or feedback. We aim to respond within 24 hours.`,
       },
       {
         q: "Is my data secure?",
@@ -142,7 +143,7 @@ const faqCategories = [
 export default function FAQ() {
   usePageMeta({
     title: "FAQ",
-    description: "Frequently asked questions about Make Custom Music. Learn about AI music generation, pricing, downloads, and account management.",
+    description: `Frequently asked questions about ${SITE_NAME}. Learn about AI music generation, pricing, downloads, and account management.`,
     canonicalPath: "/faq",
   });
   return (
@@ -159,9 +160,9 @@ export default function FAQ() {
             Frequently Asked Questions
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about Make Custom Music. Can't find what you're looking for?{" "}
+            Everything you need to know about {SITE_NAME}. Can't find what you're looking for?{" "}
             <a
-              href="mailto:support@makecustommusic.com"
+              href={`mailto:${SUPPORT_EMAIL}`}
               className="text-violet-600 hover:text-violet-700 underline"
             >
               Contact us
@@ -204,7 +205,7 @@ export default function FAQ() {
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="mailto:support@makecustommusic.com"
+              href={`mailto:${SUPPORT_EMAIL}`}
               className="inline-flex items-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white px-6 py-2.5 text-sm font-medium transition-colors"
             >
               Email Support

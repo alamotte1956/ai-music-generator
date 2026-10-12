@@ -4,6 +4,7 @@ import {
   getAllArticles,
   getArticleBySlug,
 } from "../shared/blogArticles";
+import { SITE_NAME } from "../shared/brand";
 
 // ─── Blog Article Data Tests ───
 
@@ -160,12 +161,9 @@ describe("Blog SEO", () => {
     }
   });
 
-  it("should have content with internal links to makecustommusic.com", () => {
-    // At least one article should link back to the site
+  it("should have content with an internal link back to the site", () => {
     const hasInternalLink = blogArticles.some(
-      (a) =>
-        a.content.includes("makecustommusic.com") ||
-        a.content.includes("/generate")
+      (a) => a.content.includes("](/)") || a.content.includes("/generate")
     );
     expect(hasInternalLink).toBe(true);
   });
@@ -173,7 +171,7 @@ describe("Blog SEO", () => {
 
 // ─── Enhanced Blog JSON-LD Structured Data Tests ───
 
-const BASE_URL = "https://makecustommusic.com";
+const BASE_URL = "https://app.example";
 const PUBLISHER_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663211654017/Q3oEbCsP6DUj527aoyypq7/logo-makecustommusic-V4H6NBVctSA5W9x5679fcE.webp";
 
 function estimateWordCount(content: string): number {
@@ -194,7 +192,7 @@ function buildArticleJsonLd(article: (typeof blogArticles)[0]) {
     keywords: article.tags.join(", "),
     inLanguage: "en-US",
     author: { "@type": "Organization", name: article.author, url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO } },
-    publisher: { "@type": "Organization", name: "Make Custom Music", url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO, width: 1080, height: 1080 } },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO, width: 1080, height: 1080 } },
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
@@ -362,7 +360,7 @@ describe("CollectionPage JSON-LD (Blog Listing)", () => {
       "@type": "CollectionPage",
       name: "AI Music Blog - Tips, Guides & News",
       url: `${BASE_URL}/blog`,
-      isPartOf: { "@type": "WebSite", name: "Make Custom Music", url: BASE_URL },
+      isPartOf: { "@type": "WebSite", name: SITE_NAME, url: BASE_URL },
       mainEntity: {
         "@type": "ItemList",
         itemListElement: articles.map((a, i) => ({
@@ -423,7 +421,7 @@ describe("Blog Listing BreadcrumbList JSON-LD", () => {
 
 describe("Blog Sitemap Integration", () => {
   it("should generate sitemap URLs for all blog articles", () => {
-    const BASE_URL = "https://makecustommusic.com";
+    const BASE_URL = "https://app.example";
     const articles = getAllArticles();
 
     const urls = articles.map(

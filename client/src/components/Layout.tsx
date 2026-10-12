@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useQueuePlayer } from "@/contexts/QueuePlayerContext";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { trpc } from "@/lib/trpc";
+import { LOGO_URL, SITE_NAME } from "@shared/brand";
 
 const navItems = [
   { href: "/generate", label: "Create Music", icon: Sparkles },
@@ -58,8 +59,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663211654017/Q3oEbCsP6DUj527aoyypq7/logo-makecustommusic-V4H6NBVctSA5W9x5679fcE.webp"
-              alt="MakeCustomMusic logo"
+              src={LOGO_URL}
+              alt={`${SITE_NAME} logo`}
               width={56}
               height={56}
               className="w-14 h-14 rounded-lg object-contain"
@@ -69,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               }}
             />
             <span className="text-lg font-bold text-foreground">
-              Make Custom Music
+              {SITE_NAME}
             </span>
           </Link>
 
@@ -286,7 +287,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <span className="text-black hover:text-violet-600 transition-colors cursor-pointer">Invite Friends</span>
             </Link>
           </div>
-          <p>© 2026 MakeCustomMusic.com</p>
+          <p>© 2026 {SITE_NAME}</p>
         </div>
       </footer>
     </div>

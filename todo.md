@@ -477,7 +477,7 @@
 - [x] Fix: Empty album state now shows "Add Songs" button instead of dead-end "Go to My Songs"
 
 ## Professional Logo Redesign
-- [ ] Generate a professional, modern logo for MakeCustomMusic.com
+- [ ] Generate a professional, modern logo for Clefvane
 - [ ] Upload to CDN and update VITE_APP_LOGO
 
 ## Capo Recommendation Feature
@@ -696,7 +696,7 @@
 - [x] Write tests for sitemap endpoint
 
 ## Bug Fix - Redirect URL Not Set
-- [ ] Investigate and fix "redirect URL is not set" error
+- [x] Investigate and fix "redirect URL is not set" error (login URL builder always sends redirectUri, and a missing portal URL no longer crashes the page)
 
 ## Safari Compatibility - OAuth Redirect Fix
 - [ ] Audit OAuth login URL construction for Safari btoa/atob edge cases
@@ -744,7 +744,7 @@
 - [x] Write tests for JSON-LD generation and injection
 
 ## Bug Fix - Lyrics Not Working
-- [ ] Investigate and fix lyrics generation/display issue
+- [x] Investigate and fix lyrics generation/display issue (read text from string or content-block responses)
 
 ## SEO - Canonical Tags & Robots.txt
 - [x] Add canonical tag support to usePageMeta hook
@@ -785,7 +785,7 @@
 - [x] Write tests for blog comment features
 
 ## Canonical URL Fix (SEO)
-- [x] Fix rel=canonical tags to use absolute URLs with https://makecustommusic.com
+- [x] Fix rel=canonical tags to use absolute URLs for the host serving the page
 - [x] Add server-side redirect from www to non-www
 - [x] Ensure sitemap uses consistent non-www URLs
 - [x] Verify canonical tag on homepage and all pages
@@ -825,3 +825,7 @@
 - [x] Ensure environment variables are documented for Vercel dashboard
 - [x] Write VERCEL_DEPLOY.md deployment guide
 - [x] Run tests to verify no regressions
+
+## Product Name
+- [x] Rename the public product from "Make Custom Music" to "Clefvane" so it does not collide with Scoreflow or other existing apps
+- [x] Serve the app from the deployment host and do not use a custom domain

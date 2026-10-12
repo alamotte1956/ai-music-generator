@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { getLoginUrl } from "@/const";
 import { Sparkles, Music, Download, Printer, Disc3, History, ArrowRight } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME } from "@shared/brand";
 
 const features = [
   {
@@ -56,7 +57,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
               <Sparkles className="w-4 h-4" />
-              Make Custom Music
+              {SITE_NAME}
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground leading-tight">
               Transform Your Ideas into{" "}

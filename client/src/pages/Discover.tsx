@@ -13,11 +13,12 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME } from "@shared/brand";
 
 export default function Discover() {
   usePageMeta({
     title: "Discover",
-    description: "Explore AI-generated songs shared by the community. Listen, download, and get inspired by music created with Make Custom Music.",
+    description: `Explore AI-generated songs shared by the community. Listen, download, and get inspired by music created with ${SITE_NAME}.`,
     canonicalPath: "/discover",
   });
   const { user } = useAuth();

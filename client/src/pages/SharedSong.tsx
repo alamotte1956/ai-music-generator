@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "wouter";
+import { SITE_NAME } from "@shared/brand";
 
 function formatDuration(seconds: number) {
   const m = Math.floor(seconds / 60);
@@ -104,7 +105,7 @@ export default function SharedSong() {
           <Link href="/">
             <Button variant="ghost" size="sm" className="gap-1.5">
               <Music className="w-4 h-4" />
-              Make Custom Music
+              {SITE_NAME}
             </Button>
           </Link>
         </div>
@@ -251,7 +252,7 @@ export default function SharedSong() {
           <CardContent className="py-6 text-center space-y-3">
             <h3 className="text-lg font-semibold text-foreground">Want to create your own music?</h3>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              Make Custom Music lets you generate professional songs from text descriptions, your own lyrics, or even sheet music.
+              {SITE_NAME} lets you generate professional songs from text descriptions, your own lyrics, or even sheet music.
             </p>
             <Link href="/generate">
               <Button className="bg-violet-600 hover:bg-violet-700 text-white">

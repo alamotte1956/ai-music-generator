@@ -1,9 +1,8 @@
 import type { Express } from "express";
+import { LOGO_URL, requestOrigin, SITE_NAME } from "../shared/brand";
 import { getSongByShareToken } from "./db";
 
-const BASE_URL = "https://makecustommusic.com";
-const DEFAULT_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663211654017/Q3oEbCsP6DUj527aoyypq7/logo-makecustommusic-V4H6NBVctSA5W9x5679fcE.webp";
-const SITE_NAME = "Make Custom Music";
+const DEFAULT_IMAGE = LOGO_URL;
 
 function escapeHtml(str: string): string {
   return str
@@ -43,11 +42,12 @@ export function registerOgTagsMiddleware(app: Express) {
       if (song.tempo) descParts.push(`${song.tempo} BPM`);
 
       const description = descParts.length > 0
-        ? `Listen to "${song.title}" — ${descParts.join(", ")}. Created with Make Custom Music.`
-        : `Listen to "${song.title}" on Make Custom Music. AI-generated music you can download and share.`;
+        ? `Listen to "${song.title}" — ${descParts.join(", ")}. Created with ${SITE_NAME}.`
+        : `Listen to "${song.title}" on ${SITE_NAME}. AI-generated music you can download and share.`;
 
       const ogImage = song.imageUrl || DEFAULT_IMAGE;
-      const ogUrl = `${BASE_URL}/share/${token}`;
+      const baseUrl = requestOrigin(req);
+      const ogUrl = `${baseUrl}/share/${token}`;
       const ogTitle = escapeHtml(truncate(`${song.title} — ${SITE_NAME}`, 70));
       const ogDesc = escapeHtml(truncate(description, 160));
 
@@ -94,7 +94,7 @@ export function registerOgTagsMiddleware(app: Express) {
       jsonLd.creator = {
         "@type": "Organization",
         name: SITE_NAME,
-        url: BASE_URL,
+        url: baseUrl,
       };
 
       // Store the OG data and JSON-LD in res.locals for the Vite/static handler to inject
@@ -259,10 +259,16 @@ export function buildMusicRecordingJsonLd(song: {
   if (song.createdAt) {
     jsonLd.dateCreated = new Date(song.createdAt).toISOString();
   }
+  let siteUrl = "";
+  try {
+    siteUrl = new URL(shareUrl).origin;
+  } catch {
+    siteUrl = "";
+  }
   jsonLd.creator = {
     "@type": "Organization",
     name: SITE_NAME,
-    url: BASE_URL,
+    url: siteUrl,
   };
 
   return jsonLd;

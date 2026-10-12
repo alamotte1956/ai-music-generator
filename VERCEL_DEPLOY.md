@@ -1,6 +1,6 @@
-# Vercel Deployment Guide — Make Custom Music
+# Vercel Deployment Guide — Clefvane
 
-This guide walks you through deploying the Make Custom Music application to Vercel. The project is configured as a hybrid app: Vite builds the React frontend as static assets, and the Express server runs as a Vercel Serverless Function.
+This guide walks you through deploying the Clefvane application to Vercel. The project is configured as a hybrid app: Vite builds the React frontend as static assets, and the Express server runs as a Vercel Serverless Function.
 
 ---
 
@@ -130,12 +130,9 @@ After your first deployment, you need to update your Stripe webhook endpoint:
 
 ---
 
-## Step 4: Configure Custom Domain (optional)
+## Step 4: Deployment URL
 
-1. In Vercel Dashboard, go to **Settings > Domains**.
-2. Add your custom domain (e.g., `makecustommusic.com`).
-3. Follow Vercel's DNS configuration instructions.
-4. The www-to-non-www redirect is handled by the Express middleware automatically.
+The app does not use a custom domain. Open the Vercel deployment URL. Canonical links, the sitemap, and shared-song previews use the host that served the request.
 
 ---
 

@@ -266,6 +266,19 @@ const normalizeResponseFormat = ({
   };
 };
 
+/** Pull plain text out of a chat completion, including array content blocks. */
+export function extractAssistantText(
+  content: string | Array<{ type?: string; text?: string }> | null | undefined
+): string {
+  if (typeof content === "string") return content.trim();
+  if (!Array.isArray(content)) return "";
+  return content
+    .filter((part) => part?.type === "text" && typeof part.text === "string")
+    .map((part) => part.text as string)
+    .join("\n")
+    .trim();
+}
+
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   assertApiKey();
 
