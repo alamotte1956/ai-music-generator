@@ -10,6 +10,7 @@
  * - Rectangles and boxes must never extend above MARGIN_TOP or below the safe bottom
  */
 import jsPDF from "jspdf";
+import { SITE_NAME } from "@shared/brand";
 
 // ─── Page Constants ───
 const PAGE_WIDTH = 210; // A4 mm
@@ -31,7 +32,7 @@ const BODY_SIZE = 11;
 const SMALL_SIZE = 9;
 const FOOTER_SIZE = 8;
 
-const FOOTER_TEXT = "Generated with Make Custom Music \u2022 makecustommusic.com";
+const FOOTER_TEXT = `Generated with ${SITE_NAME} \u2022 makecustommusic.com`;
 
 /**
  * Add footer to all pages. Footer is placed in the FOOTER_RESERVE zone

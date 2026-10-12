@@ -4,6 +4,7 @@ import {
   getAllArticles,
   getArticleBySlug,
 } from "../shared/blogArticles";
+import { SITE_NAME } from "../shared/brand";
 
 // ─── Blog Article Data Tests ───
 
@@ -194,7 +195,7 @@ function buildArticleJsonLd(article: (typeof blogArticles)[0]) {
     keywords: article.tags.join(", "),
     inLanguage: "en-US",
     author: { "@type": "Organization", name: article.author, url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO } },
-    publisher: { "@type": "Organization", name: "Make Custom Music", url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO, width: 1080, height: 1080 } },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: BASE_URL, logo: { "@type": "ImageObject", url: PUBLISHER_LOGO, width: 1080, height: 1080 } },
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
@@ -362,7 +363,7 @@ describe("CollectionPage JSON-LD (Blog Listing)", () => {
       "@type": "CollectionPage",
       name: "AI Music Blog - Tips, Guides & News",
       url: `${BASE_URL}/blog`,
-      isPartOf: { "@type": "WebSite", name: "Make Custom Music", url: BASE_URL },
+      isPartOf: { "@type": "WebSite", name: SITE_NAME, url: BASE_URL },
       mainEntity: {
         "@type": "ItemList",
         itemListElement: articles.map((a, i) => ({

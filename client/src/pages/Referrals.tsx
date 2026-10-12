@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { copyToClipboard } from "@/lib/clipboard";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME } from "@shared/brand";
 
 function RankIcon({ rank }: { rank: number }) {
   if (rank === 1) return <Crown className="h-5 w-5 text-yellow-500" />;
@@ -135,7 +136,7 @@ function LeaderboardSection({ userId }: { userId: number }) {
 export default function Referrals() {
   usePageMeta({
     title: "Invite Friends",
-    description: "Invite friends to Make Custom Music and earn free credits. Share your referral link and get rewarded when they sign up.",
+    description: `Invite friends to ${SITE_NAME} and earn free credits. Share your referral link and get rewarded when they sign up.`,
     canonicalPath: "/referrals",
   });
   const { user, loading } = useAuth();
@@ -183,7 +184,7 @@ export default function Referrals() {
     if (typeof navigator.share === "function") {
       try {
         await navigator.share({
-          title: "Make Custom Music",
+          title: SITE_NAME,
           text: "Create AI-generated songs in seconds! Use my referral link to get started:",
           url: referralLink,
         });

@@ -1,6 +1,7 @@
 import { useParams, Link, Redirect } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getArticleBySlug, getAllArticles, type BlogArticle } from "../../../shared/blogArticles";
+import { SITE_NAME } from "@shared/brand";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, User, BookOpen } from "lucide-react";
 import { useEffect } from "react";
 import CommentSection from "@/components/CommentSection";
@@ -85,7 +86,7 @@ function buildArticleJsonLd(article: BlogArticle) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Make Custom Music",
+      name: SITE_NAME,
       url: BASE_URL,
       logo: {
         "@type": "ImageObject",

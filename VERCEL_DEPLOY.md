@@ -1,6 +1,6 @@
-# Vercel Deployment Guide — Make Custom Music
+# Vercel Deployment Guide — Clefvane
 
-This guide walks you through deploying the Make Custom Music application to Vercel. The project is configured as a hybrid app: Vite builds the React frontend as static assets, and the Express server runs as a Vercel Serverless Function.
+This guide walks you through deploying the Clefvane application to Vercel. The project is configured as a hybrid app: Vite builds the React frontend as static assets, and the Express server runs as a Vercel Serverless Function.
 
 ---
 

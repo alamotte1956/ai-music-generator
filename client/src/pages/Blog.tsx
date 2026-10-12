@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getAllArticles } from "../../../shared/blogArticles";
+import { SITE_NAME } from "@shared/brand";
 import { Calendar, Clock, ArrowRight, BookOpen, Tag } from "lucide-react";
 import { useEffect } from "react";
 
@@ -18,7 +19,7 @@ function buildBlogListingJsonLd() {
     url: `${BASE_URL}/blog`,
     isPartOf: {
       "@type": "WebSite",
-      name: "Make Custom Music",
+      name: SITE_NAME,
       url: BASE_URL,
     },
     mainEntity: {

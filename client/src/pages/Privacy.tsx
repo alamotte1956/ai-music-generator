@@ -1,11 +1,12 @@
 import { Link } from "wouter";
 import { Shield, ArrowLeft } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME } from "@shared/brand";
 
 export default function Privacy() {
   usePageMeta({
     title: "Privacy Policy",
-    description: "Privacy policy for Make Custom Music. Learn how we collect, use, and protect your personal data.",
+    description: `Privacy policy for ${SITE_NAME}. Learn how we collect, use, and protect your personal data.`,
     canonicalPath: "/privacy",
   });
   return (
@@ -33,7 +34,7 @@ export default function Privacy() {
         {/* Introduction */}
         <section>
           <p className="leading-relaxed">
-            A. LaMotte Music ("we," "us," or "our") operates Make Custom Music at{" "}
+            A. LaMotte Music ("we," "us," or "our") operates {SITE_NAME} at{" "}
             <strong>makecustommusic.com</strong>. This Privacy Policy explains how we
             collect, use, disclose, and safeguard your information when you visit our
             website and use our AI music generation services. By using the Service, you

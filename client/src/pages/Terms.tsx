@@ -1,11 +1,12 @@
 import { Link } from "wouter";
 import { FileText, ArrowLeft } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { SITE_NAME } from "@shared/brand";
 
 export default function Terms() {
   usePageMeta({
     title: "Terms of Service",
-    description: "Terms of service for Make Custom Music. Understand your rights and responsibilities when using our AI music generation platform.",
+    description: `Terms of service for ${SITE_NAME}. Understand your rights and responsibilities when using our AI music generation platform.`,
     canonicalPath: "/terms",
   });
   return (
@@ -33,7 +34,7 @@ export default function Terms() {
         {/* Introduction */}
         <section>
           <p className="leading-relaxed">
-            Welcome to Make Custom Music. These Terms of Service ("Terms") govern your
+            Welcome to {SITE_NAME}. These Terms of Service ("Terms") govern your
             access to and use of the website at <strong>makecustommusic.com</strong> and
             all related services (collectively, the "Service") operated by A. LaMotte
             Music ("we," "us," or "our"). By accessing or using the Service, you agree to
@@ -68,7 +69,7 @@ export default function Terms() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-3">3. Service Description</h2>
           <p className="leading-relaxed">
-            Make Custom Music is an AI-powered music generation platform that allows users
+            {SITE_NAME} is an AI-powered music generation platform that allows users
             to create original music by providing text descriptions, keywords, or custom
             lyrics. The Service includes audio generation, sheet music creation, chord
             charts, lyrics generation, album organization, and audio file downloads. The

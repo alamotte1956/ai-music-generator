@@ -477,7 +477,7 @@
 - [x] Fix: Empty album state now shows "Add Songs" button instead of dead-end "Go to My Songs"
 
 ## Professional Logo Redesign
-- [ ] Generate a professional, modern logo for MakeCustomMusic.com
+- [ ] Generate a professional, modern logo for Clefvane
 - [ ] Upload to CDN and update VITE_APP_LOGO
 
 ## Capo Recommendation Feature
@@ -825,3 +825,7 @@
 - [x] Ensure environment variables are documented for Vercel dashboard
 - [x] Write VERCEL_DEPLOY.md deployment guide
 - [x] Run tests to verify no regressions
+
+## Product Name
+- [x] Rename the public product from "Make Custom Music" to "Clefvane" so it does not collide with Scoreflow or other existing apps
+- [x] Keep the live domain and support email on makecustommusic.com
