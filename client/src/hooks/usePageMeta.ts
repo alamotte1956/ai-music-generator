@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { SITE_NAME, SITE_TITLE } from "@shared/brand";
+import { currentOrigin, SITE_NAME, SITE_TITLE } from "@shared/brand";
 
 const DEFAULT_TITLE = SITE_TITLE;
 const DEFAULT_DESCRIPTION =
   "Create AI-generated music from text descriptions. Compose songs, download MP3s, view sheet music, and build albums instantly.";
-const BASE_URL = "https://makecustommusic.com";
 
 interface PageMeta {
   title?: string;
@@ -35,7 +34,7 @@ export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
     const canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     const prevCanonical = canonicalLink?.getAttribute("href") ?? null;
     const path = canonicalPath ?? window.location.pathname;
-    const canonicalUrl = `${BASE_URL}${path === "/" ? "" : path}`;
+    const canonicalUrl = `${currentOrigin()}${path === "/" ? "" : path}`;
     if (canonicalLink) {
       canonicalLink.setAttribute("href", canonicalUrl);
     } else {
@@ -69,7 +68,7 @@ export function usePageMeta({ title, description, canonicalPath }: PageMeta) {
       if (canonicalLink && prevCanonical !== null) {
         canonicalLink.setAttribute("href", prevCanonical);
       } else if (canonicalLink) {
-        canonicalLink.setAttribute("href", BASE_URL);
+        canonicalLink.setAttribute("href", currentOrigin() || "/");
       }
       // Restore og:url and twitter:url
       if (ogUrl && prevOgUrl !== null) {

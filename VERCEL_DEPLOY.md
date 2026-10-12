@@ -130,13 +130,9 @@ After your first deployment, you need to update your Stripe webhook endpoint:
 
 ---
 
-## Step 4: Configure Custom Domain (optional)
+## Step 4: Deployment URL
 
-1. In Vercel Dashboard, go to **Settings > Domains**.
-2. Add your custom domain (e.g., `makecustommusic.com`).
-3. Copy the A record and `www` CNAME from that domain card. For most projects the apex A record is `76.76.21.21` and the www CNAME is a `*.vercel-dns.com` host. Use the values on the card.
-4. At the registrar (GoDaddy for this domain), replace the existing records. The live zone currently points the apex at Cloudflare anycast addresses `104.18.26.246` and `104.18.27.246`, and `www` is a CNAME back to the apex. Cloudflare then answers with error 1001, so the site never reaches Vercel.
-5. The www-to-non-www redirect is handled by the Express middleware automatically.
+The app does not use a custom domain. Open the Vercel deployment URL. Canonical links, the sitemap, and shared-song previews use the host that served the request.
 
 ---
 

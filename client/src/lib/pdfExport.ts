@@ -32,7 +32,7 @@ const BODY_SIZE = 11;
 const SMALL_SIZE = 9;
 const FOOTER_SIZE = 8;
 
-const FOOTER_TEXT = `Generated with ${SITE_NAME} \u2022 makecustommusic.com`;
+const FOOTER_TEXT = `Generated with ${SITE_NAME}`;
 
 /**
  * Add footer to all pages. Footer is placed in the FOOTER_RESERVE zone

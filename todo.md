@@ -785,7 +785,7 @@
 - [x] Write tests for blog comment features
 
 ## Canonical URL Fix (SEO)
-- [x] Fix rel=canonical tags to use absolute URLs with https://makecustommusic.com
+- [x] Fix rel=canonical tags to use absolute URLs for the host serving the page
 - [x] Add server-side redirect from www to non-www
 - [x] Ensure sitemap uses consistent non-www URLs
 - [x] Verify canonical tag on homepage and all pages
@@ -828,4 +828,4 @@
 
 ## Product Name
 - [x] Rename the public product from "Make Custom Music" to "Clefvane" so it does not collide with Scoreflow or other existing apps
-- [x] Keep the live domain and support email on makecustommusic.com
+- [x] Serve the app from the deployment host and do not use a custom domain

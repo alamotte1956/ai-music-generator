@@ -1,15 +1,15 @@
 import { Link } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getAllArticles } from "../../../shared/blogArticles";
-import { SITE_NAME } from "@shared/brand";
+import { currentOrigin, SITE_NAME } from "@shared/brand";
 import { Calendar, Clock, ArrowRight, BookOpen, Tag } from "lucide-react";
 import { useEffect } from "react";
 
-const BASE_URL = "https://makecustommusic.com";
 const articles = getAllArticles();
 
 /** Build CollectionPage JSON-LD for the blog listing */
 function buildBlogListingJsonLd() {
+  const BASE_URL = currentOrigin();
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -36,6 +36,7 @@ function buildBlogListingJsonLd() {
 
 /** Build BreadcrumbList JSON-LD for the blog listing */
 function buildBlogBreadcrumbJsonLd() {
+  const BASE_URL = currentOrigin();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

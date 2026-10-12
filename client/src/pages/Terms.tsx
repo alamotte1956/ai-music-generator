@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { FileText, ArrowLeft } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { SITE_NAME } from "@shared/brand";
+import { SITE_NAME, SUPPORT_EMAIL } from "@shared/brand";
 
 export default function Terms() {
   usePageMeta({
@@ -35,7 +35,7 @@ export default function Terms() {
         <section>
           <p className="leading-relaxed">
             Welcome to {SITE_NAME}. These Terms of Service ("Terms") govern your
-            access to and use of the website at <strong>makecustommusic.com</strong> and
+            access to and use of this website and
             all related services (collectively, the "Service") operated by A. LaMotte
             Music ("we," "us," or "our"). By accessing or using the Service, you agree to
             be bound by these Terms. If you do not agree, please do not use the Service.
@@ -266,14 +266,14 @@ export default function Terms() {
             <p className="font-medium text-foreground">A. LaMotte Music</p>
             <p className="text-foreground/70 mt-1">
               Email:{" "}
-              <a href="mailto:support@makecustommusic.com" className="text-violet-600 hover:underline">
-                support@makecustommusic.com
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-violet-600 hover:underline">
+                {SUPPORT_EMAIL}
               </a>
             </p>
             <p className="text-foreground/70 mt-1">
               Website:{" "}
-              <a href="https://makecustommusic.com" className="text-violet-600 hover:underline">
-                makecustommusic.com
+              <a href="/" className="text-violet-600 hover:underline">
+                {SITE_NAME}
               </a>
             </p>
           </div>

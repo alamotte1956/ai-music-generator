@@ -5,7 +5,7 @@ import { describe, it, expect, vi } from "vitest";
 describe("Dynamic Sitemap", () => {
   describe("XML structure", () => {
     it("should produce valid XML with urlset root element", () => {
-      const BASE_URL = "https://makecustommusic.com";
+      const BASE_URL = "https://app.example";
       const staticRoutes = [
         { path: "/", changefreq: "weekly", priority: 1.0 },
         { path: "/generate", changefreq: "weekly", priority: 0.9 },
@@ -22,13 +22,13 @@ describe("Dynamic Sitemap", () => {
       expect(xml).toContain('<?xml version="1.0"');
       expect(xml).toContain("<urlset");
       expect(xml).toContain("</urlset>");
-      expect(xml).toContain("<loc>https://makecustommusic.com/</loc>");
-      expect(xml).toContain("<loc>https://makecustommusic.com/generate</loc>");
-      expect(xml).toContain("<loc>https://makecustommusic.com/discover</loc>");
+      expect(xml).toContain("<loc>https://app.example/</loc>");
+      expect(xml).toContain("<loc>https://app.example/generate</loc>");
+      expect(xml).toContain("<loc>https://app.example/discover</loc>");
     });
 
     it("should include shared song URLs with /share/:token pattern", () => {
-      const BASE_URL = "https://makecustommusic.com";
+      const BASE_URL = "https://app.example";
       const sharedSongs = [
         { shareToken: "abc123", updatedAt: new Date("2026-01-15") },
         { shareToken: "def456", updatedAt: new Date("2026-02-20") },

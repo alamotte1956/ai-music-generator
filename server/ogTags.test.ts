@@ -8,13 +8,13 @@ const SAMPLE_HTML = `<!doctype html>
 <title>Clefvane - AI Music Generator &amp; Composer</title>
 <meta name="title" content="Clefvane - AI Music Generator &amp; Composer" />
 <meta name="description" content="Create AI-generated music from text descriptions." />
-<link rel="canonical" href="https://makecustommusic.com/" />
+<link rel="canonical" href="https://app.example/" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://makecustommusic.com/" />
+<meta property="og:url" content="https://app.example/" />
 <meta property="og:title" content="Clefvane - AI Music Generator &amp; Composer" />
 <meta property="og:description" content="Transform your ideas into songs with AI." />
 <meta property="og:image" content="https://example.com/default.webp" />
-<meta name="twitter:url" content="https://makecustommusic.com/" />
+<meta name="twitter:url" content="https://app.example/" />
 <meta name="twitter:title" content="Clefvane - AI Music Generator &amp; Composer" />
 <meta name="twitter:description" content="Transform your ideas into songs with AI." />
 <meta name="twitter:image" content="https://example.com/default.webp" />
@@ -27,7 +27,7 @@ describe("OG Tag Injection", () => {
     title: "Midnight Dreams — Clefvane",
     description: "Listen to &quot;Midnight Dreams&quot; — jazz, melancholic. Created with Clefvane.",
     image: "https://cdn.example.com/covers/midnight-dreams.jpg",
-    url: "https://makecustommusic.com/share/abc123",
+    url: "https://app.example/share/abc123",
     type: "music.song",
   };
 
@@ -191,12 +191,12 @@ describe("buildMusicRecordingJsonLd", () => {
       createdAt: new Date("2026-01-15T10:30:00Z"),
     };
 
-    const result = buildMusicRecordingJsonLd(song, "https://makecustommusic.com/share/abc123");
+    const result = buildMusicRecordingJsonLd(song, "https://app.example/share/abc123");
 
     expect(result["@context"]).toBe("https://schema.org");
     expect(result["@type"]).toBe("MusicRecording");
     expect(result.name).toBe("Midnight Dreams");
-    expect(result.url).toBe("https://makecustommusic.com/share/abc123");
+    expect(result.url).toBe("https://app.example/share/abc123");
     expect(result.genre).toBe("jazz");
     expect(result.duration).toBe("PT3M5S");
     expect(result.musicalKey).toBe("Cm");
@@ -215,7 +215,7 @@ describe("buildMusicRecordingJsonLd", () => {
     expect(result.creator).toEqual({
       "@type": "Organization",
       name: SITE_NAME,
-      url: "https://makecustommusic.com",
+      url: "https://app.example",
     });
   });
 
@@ -233,12 +233,12 @@ describe("buildMusicRecordingJsonLd", () => {
       createdAt: null,
     };
 
-    const result = buildMusicRecordingJsonLd(song, "https://makecustommusic.com/share/xyz789");
+    const result = buildMusicRecordingJsonLd(song, "https://app.example/share/xyz789");
 
     expect(result["@context"]).toBe("https://schema.org");
     expect(result["@type"]).toBe("MusicRecording");
     expect(result.name).toBe("Untitled Track");
-    expect(result.url).toBe("https://makecustommusic.com/share/xyz789");
+    expect(result.url).toBe("https://app.example/share/xyz789");
     // Should use default image when imageUrl is null
     expect(result.image).toContain("cloudfront.net");
     // Optional fields should be absent
@@ -259,7 +259,7 @@ describe("buildMusicRecordingJsonLd", () => {
       mp3Url: "https://cdn.example.com/fallback.mp3",
     };
 
-    const result = buildMusicRecordingJsonLd(song, "https://makecustommusic.com/share/test");
+    const result = buildMusicRecordingJsonLd(song, "https://app.example/share/test");
     expect(result.audio.contentUrl).toBe("https://cdn.example.com/audio.mp3");
   });
 
@@ -270,7 +270,7 @@ describe("buildMusicRecordingJsonLd", () => {
       mp3Url: "https://cdn.example.com/fallback.mp3",
     };
 
-    const result = buildMusicRecordingJsonLd(song, "https://makecustommusic.com/share/test");
+    const result = buildMusicRecordingJsonLd(song, "https://app.example/share/test");
     expect(result.audio.contentUrl).toBe("https://cdn.example.com/fallback.mp3");
   });
 
@@ -298,7 +298,7 @@ describe("buildMusicRecordingJsonLd", () => {
       createdAt: new Date("2026-02-01"),
     };
 
-    const result = buildMusicRecordingJsonLd(song, "https://makecustommusic.com/share/test");
+    const result = buildMusicRecordingJsonLd(song, "https://app.example/share/test");
     const json = JSON.stringify(result);
     const parsed = JSON.parse(json);
 
@@ -314,18 +314,18 @@ describe("Canonical Tag Injection", () => {
       title: "Test Song — Clefvane",
       description: "Listen to Test Song.",
       image: "https://example.com/cover.jpg",
-      url: "https://makecustommusic.com/share/abc123",
+      url: "https://app.example/share/abc123",
       type: "music.song",
     };
     const result = injectOgTags(SAMPLE_HTML, ogTags);
-    expect(result).toContain('<link rel="canonical" href="https://makecustommusic.com/share/abc123" />');
+    expect(result).toContain('<link rel="canonical" href="https://app.example/share/abc123" />');
     // Should not contain the default canonical
-    expect(result).not.toContain('<link rel="canonical" href="https://makecustommusic.com/" />');
+    expect(result).not.toContain('<link rel="canonical" href="https://app.example/" />');
   });
 
   it("should preserve default canonical when no OG tags injected", () => {
     const result = injectOgTags(SAMPLE_HTML, undefined);
-    expect(result).toContain('<link rel="canonical" href="https://makecustommusic.com/" />');
+    expect(result).toContain('<link rel="canonical" href="https://app.example/" />');
   });
 
   it("should have exactly one canonical link tag after injection", () => {
@@ -333,7 +333,7 @@ describe("Canonical Tag Injection", () => {
       title: "Test",
       description: "Test",
       image: "https://example.com/img.jpg",
-      url: "https://makecustommusic.com/share/xyz",
+      url: "https://app.example/share/xyz",
       type: "music.song",
     };
     const result = injectOgTags(SAMPLE_HTML, ogTags);

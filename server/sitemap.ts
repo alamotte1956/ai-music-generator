@@ -3,8 +3,7 @@ import { getDb } from "./db";
 import { songs } from "../drizzle/schema";
 import { eq, desc } from "drizzle-orm";
 import { getAllArticles } from "../shared/blogArticles";
-
-const BASE_URL = "https://makecustommusic.com";
+import { requestOrigin } from "../shared/brand";
 
 // Static routes with their change frequency and priority
 const STATIC_ROUTES: { path: string; changefreq: string; priority: number }[] = [
@@ -33,8 +32,9 @@ function formatDate(date: Date): string {
 }
 
 export function registerSitemapRoute(app: Express) {
-  app.get("/sitemap.xml", async (_req, res) => {
+  app.get("/sitemap.xml", async (req, res) => {
     try {
+      const BASE_URL = requestOrigin(req);
       const urls: string[] = [];
 
       // Add static routes

@@ -1,7 +1,7 @@
 import { useParams, Link, Redirect } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { getArticleBySlug, getAllArticles, type BlogArticle } from "../../../shared/blogArticles";
-import { SITE_NAME } from "@shared/brand";
+import { currentOrigin, LOGO_URL, SITE_NAME } from "@shared/brand";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag, User, BookOpen } from "lucide-react";
 import { useEffect } from "react";
 import CommentSection from "@/components/CommentSection";
@@ -16,7 +16,7 @@ function renderMarkdown(md: string): string {
     .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
     // Links — convert internal links to the site
     .replace(
-      /\[([^\]]+)\]\((https:\/\/makecustommusic\.com[^)]*)\)/g,
+      /\[([^\]]+)\]\((\/[^)]*)\)/g,
       '<a href="$2" class="text-primary underline hover:opacity-80">$1</a>'
     )
     // External links
@@ -52,8 +52,7 @@ function renderMarkdown(md: string): string {
   return html;
 }
 
-const BASE_URL = "https://makecustommusic.com";
-const PUBLISHER_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663211654017/Q3oEbCsP6DUj527aoyypq7/logo-makecustommusic-V4H6NBVctSA5W9x5679fcE.webp";
+const PUBLISHER_LOGO = LOGO_URL;
 
 /** Estimate word count from markdown content */
 function estimateWordCount(content: string): number {
@@ -62,6 +61,7 @@ function estimateWordCount(content: string): number {
 
 /** Build enhanced JSON-LD Article structured data */
 function buildArticleJsonLd(article: BlogArticle) {
+  const BASE_URL = currentOrigin();
   const wordCount = estimateWordCount(article.content);
   const articleUrl = `${BASE_URL}/blog/${article.slug}`;
 
@@ -108,6 +108,7 @@ function buildArticleJsonLd(article: BlogArticle) {
 
 /** Build BreadcrumbList JSON-LD */
 function buildBreadcrumbJsonLd(article: BlogArticle) {
+  const BASE_URL = currentOrigin();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

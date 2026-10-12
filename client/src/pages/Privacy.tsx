@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Shield, ArrowLeft } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { SITE_NAME } from "@shared/brand";
+import { SITE_NAME, SUPPORT_EMAIL } from "@shared/brand";
 
 export default function Privacy() {
   usePageMeta({
@@ -34,8 +34,7 @@ export default function Privacy() {
         {/* Introduction */}
         <section>
           <p className="leading-relaxed">
-            A. LaMotte Music ("we," "us," or "our") operates {SITE_NAME} at{" "}
-            <strong>makecustommusic.com</strong>. This Privacy Policy explains how we
+            A. LaMotte Music ("we," "us," or "our") operates {SITE_NAME}. This Privacy Policy explains how we
             collect, use, disclose, and safeguard your information when you visit our
             website and use our AI music generation services. By using the Service, you
             agree to the collection and use of information in accordance with this policy.
@@ -231,14 +230,14 @@ export default function Privacy() {
             <p className="font-medium text-foreground">A. LaMotte Music</p>
             <p className="text-foreground/70 mt-1">
               Email:{" "}
-              <a href="mailto:support@makecustommusic.com" className="text-violet-600 hover:underline">
-                support@makecustommusic.com
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-violet-600 hover:underline">
+                {SUPPORT_EMAIL}
               </a>
             </p>
             <p className="text-foreground/70 mt-1">
               Website:{" "}
-              <a href="https://makecustommusic.com" className="text-violet-600 hover:underline">
-                makecustommusic.com
+              <a href="/" className="text-violet-600 hover:underline">
+                {SITE_NAME}
               </a>
             </p>
           </div>

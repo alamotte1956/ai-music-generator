@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { HelpCircle, Music, CreditCard, Shield, Headphones, FileText } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { SITE_NAME } from "@shared/brand";
+import { SITE_NAME, SUPPORT_EMAIL } from "@shared/brand";
 import {
   Accordion,
   AccordionContent,
@@ -130,7 +130,7 @@ const faqCategories = [
       },
       {
         q: "How do I contact support?",
-        a: "You can reach us at support@makecustommusic.com for any questions, issues, or feedback. We aim to respond within 24 hours.",
+        a: `You can reach us at ${SUPPORT_EMAIL} for any questions, issues, or feedback. We aim to respond within 24 hours.`,
       },
       {
         q: "Is my data secure?",
@@ -162,7 +162,7 @@ export default function FAQ() {
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Everything you need to know about {SITE_NAME}. Can't find what you're looking for?{" "}
             <a
-              href="mailto:support@makecustommusic.com"
+              href={`mailto:${SUPPORT_EMAIL}`}
               className="text-violet-600 hover:text-violet-700 underline"
             >
               Contact us
@@ -205,7 +205,7 @@ export default function FAQ() {
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="mailto:support@makecustommusic.com"
+              href={`mailto:${SUPPORT_EMAIL}`}
               className="inline-flex items-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white px-6 py-2.5 text-sm font-medium transition-colors"
             >
               Email Support
