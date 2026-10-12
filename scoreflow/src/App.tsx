@@ -229,6 +229,27 @@ export default function App() {
           <button className="primary" type="submit" disabled={!canSubmit}>
             {busy ? "Transcribing with Mirelo…" : "Convert to sheet music"}
           </button>
+          <button
+            type="button"
+            className="secondary"
+            disabled={busy}
+            onClick={async () => {
+              setBusy(true);
+              setError(null);
+              try {
+                const res = await fetch("/api/sample");
+                const data = await res.json();
+                if (!data.ok) throw new Error("Sample preview failed");
+                setResult(data.result as ConvertResult);
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Sample failed");
+              } finally {
+                setBusy(false);
+              }
+            }}
+          >
+            Preview sample lead sheet
+          </button>
         </div>
 
         {error && <div className="banner error">{error}</div>}

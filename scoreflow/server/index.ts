@@ -9,6 +9,7 @@ import ViteExpress from "vite-express";
 import { runUploadGates } from "./gates.js";
 import { convertAudioToLeadSheet } from "./convert.js";
 import { mireloConfigured } from "./mirelo.js";
+import { getSampleLeadSheet } from "./sample.js";
 import type { ConvertJob } from "./types.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -42,6 +43,11 @@ app.get("/api/health", (_req, res) => {
       whisper: Boolean(process.env.OPENAI_API_KEY?.trim()),
     },
   });
+});
+
+/** UI demo result — no upload, no API keys required. */
+app.get("/api/sample", (_req, res) => {
+  res.json({ ok: true, result: getSampleLeadSheet() });
 });
 
 app.post("/api/convert", upload.single("audio"), async (req, res) => {

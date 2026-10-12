@@ -158,6 +158,18 @@ a.primary {
   font-weight: 700;
 }
 
+button.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 0.85rem 1.35rem;
+}
+
+button.secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
 button.primary:hover:not(:disabled) {
   background: var(--accent-deep);
   transform: translateY(-1px);
