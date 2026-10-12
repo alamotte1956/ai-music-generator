@@ -3,6 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
+import { normalizeAudioMime } from "@shared/audioMime";
 import { invokeLLM } from "./_core/llm";
 import {
   createSong, getSongById, getUserSongs, deleteSong, updateSong, updateSongMp3,
@@ -281,23 +282,31 @@ ${genreGuide}${moodGuide}${vocalGuidance}`;
       .input(z.object({
         fileName: z.string().min(1).max(255),
         fileData: z.string().min(1), // base64 encoded
-        mimeType: z.string().refine(t => ["audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/mp4", "audio/x-m4a", "audio/aac"].includes(t), "Unsupported audio format"),
+        mimeType: z.string(),
         title: z.string().min(1).max(200).optional(),
         genre: z.string().max(100).optional(),
         mood: z.string().max(100).optional(),
-      }))
+      }).refine(
+        (value) => {
+          const mime = normalizeAudioMime(value.mimeType, value.fileName);
+          return mime !== null && ["audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/mp4", "audio/x-m4a", "audio/aac"].includes(mime);
+        },
+        "Unsupported audio format"
+      ))
       .mutation(async ({ ctx, input }) => {
         const plan = await getUserPlan(ctx.user.id);
         const balance = await getCreditBalance(ctx.user.id);
         if (balance.totalCredits < 1) throw new Error("Insufficient credits. Please upgrade or purchase more credits.");
 
-        // Decode base64 and upload to S3
+        // Decode base64 and upload to storage
         const buffer = Buffer.from(input.fileData, "base64");
         if (buffer.length > 50 * 1024 * 1024) throw new Error("File too large. Maximum size is 50MB.");
 
-        const ext = input.mimeType.split("/")[1] === "mpeg" ? "mp3" : input.mimeType.split("/")[1];
+        const mimeType = normalizeAudioMime(input.mimeType, input.fileName) ?? input.mimeType;
+        const mimeSubtype = mimeType.split("/")[1];
+        const ext = mimeSubtype === "mpeg" ? "mp3" : mimeSubtype === "x-m4a" ? "m4a" : mimeSubtype;
         const fileKey = `uploads/${ctx.user.id}/${nanoid()}.${ext}`;
-        const { url: audioUrl } = await storagePut(fileKey, buffer, input.mimeType);
+        const { url: audioUrl } = await storagePut(fileKey, buffer, mimeType);
 
         const title = input.title || input.fileName.replace(/\.[^/.]+$/, "");
         const song = await createSong({

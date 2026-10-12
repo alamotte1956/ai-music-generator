@@ -12,6 +12,7 @@ import { registerOgTagsMiddleware } from "../ogTags";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { registerLocalStorageRoute } from "../storage";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -62,6 +63,9 @@ async function startServer() {
   registerSitemapRoute(app);
   // OG meta tag injection for shared song pages
   registerOgTagsMiddleware(app);
+  // Local files when Forge storage credentials are unset.
+  // Must be registered before Vite's catch-all, which would otherwise swallow the path.
+  registerLocalStorageRoute(app);
   // tRPC API
   app.use(
     "/api/trpc",
