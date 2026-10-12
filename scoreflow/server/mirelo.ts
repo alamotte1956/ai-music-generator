@@ -4,6 +4,15 @@ import { nanoid } from "nanoid";
 
 const MIRELO_BASE = "https://api.mirelo.ai";
 
+/** Resolve Mirelo job URLs that may be path-only (e.g. `/v2/.../jobs/id`). */
+function absoluteMireloUrl(urlOrPath: string): string {
+  const trimmed = urlOrPath.trim();
+  if (!trimmed) return trimmed;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("/")) return `${MIRELO_BASE}${trimmed}`;
+  return `${MIRELO_BASE}/${trimmed}`;
+}
+
 export type MireloScorePdfs = {
   full_score_url?: string;
   parts?: { name?: string; url?: string }[];
@@ -201,21 +210,21 @@ export async function transcribeWithMirelo(filePath: string): Promise<MireloResu
     job_url?: string;
     id?: string;
   };
-  const jobUrl =
+  const rawJobUrl =
     created.job_url ||
     (created.job_id
-      ? `${MIRELO_BASE}/v2/audio-to-midi/v1.0/jobs/${created.job_id}`
+      ? `/v2/audio-to-midi/v1.0/jobs/${created.job_id}`
       : created.id
-        ? `${MIRELO_BASE}/v2/audio-to-midi/v1.0/jobs/${created.id}`
+        ? `/v2/audio-to-midi/v1.0/jobs/${created.id}`
         : null);
-  if (!jobUrl) {
+  if (!rawJobUrl) {
     // Response might already be a completed sync-shaped body
     if ((created as { midi_url?: string }).midi_url || (created as { status?: string }).status) {
       return normalizeResult(created as unknown as Record<string, unknown>);
     }
     throw new Error("Mirelo job create did not return a job URL.");
   }
-  return pollJob(jobUrl);
+  return pollJob(absoluteMireloUrl(rawJobUrl));
 }
 
 async function transcribeWithMireloSync(payload: Record<string, unknown>): Promise<MireloResult> {
